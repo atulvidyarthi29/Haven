@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    jdbc-url: jdbc:postgresql://localhost:5432/haven
+    username: postgres
+    password: 1234
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
