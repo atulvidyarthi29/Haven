@@ -6,6 +6,9 @@ import java.util.UUID;
 
 
 public class Post {
+
+    // TODO: 02/10/2020 JPA required 
+
     UUID id;
     String title;
     String description;

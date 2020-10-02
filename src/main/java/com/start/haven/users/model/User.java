@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Table(name = "haven_users")
 public class User {
 
+    // TODO: 02/10/2020 constraints 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;

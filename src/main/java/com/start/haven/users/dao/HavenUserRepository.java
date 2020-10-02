@@ -1,5 +1,6 @@
-package com.start.haven.users.model;
+package com.start.haven.users.dao;
 
+import com.start.haven.users.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

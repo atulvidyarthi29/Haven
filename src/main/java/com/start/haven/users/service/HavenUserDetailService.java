@@ -1,8 +1,7 @@
 package com.start.haven.users.service;
 
-import com.start.haven.users.model.HavenUserDetails;
-import com.start.haven.users.model.HavenUserRepository;
-import com.start.haven.users.model.User;
+import com.start.haven.users.dao.HavenUserRepository;
+import com.start.haven.users.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
