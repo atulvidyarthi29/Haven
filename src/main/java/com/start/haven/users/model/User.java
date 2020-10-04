@@ -3,7 +3,7 @@ package com.start.haven.users.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "haven_users")
+@Table(name = "users")
 public class User {
 
     // TODO: 02/10/2020 constraints 

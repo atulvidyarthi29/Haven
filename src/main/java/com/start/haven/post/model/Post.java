@@ -1,38 +1,38 @@
 package com.start.haven.post.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.start.haven.users.model.User;
 
-import java.util.UUID;
+import javax.persistence.*;
 
 
+@Entity
 public class Post {
 
-    // TODO: 02/10/2020 JPA required 
-
-    UUID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    long id;
     String title;
     String description;
     long upVotes;
     long downVotes;
-    UUID userId;
 
-    public Post(@JsonProperty("id") UUID id,
-                @JsonProperty("title") String title,
-                @JsonProperty("description") String description) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.upVotes = 0L;
-        this.downVotes = 0L;
-        this.userId = null;
+    @ManyToOne
+    User userId;
+
+    public User getUserId() {
+        return userId;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
-    public UUID getId() {
+    public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -43,6 +43,22 @@ public class Post {
         return description;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setUpVotes(long upVotes) {
+        this.upVotes = upVotes;
+    }
+
+    public void setDownVotes(long downVotes) {
+        this.downVotes = downVotes;
+    }
+
     public long getUpVotes() {
         return upVotes;
     }
@@ -51,7 +67,4 @@ public class Post {
         return downVotes;
     }
 
-    public UUID getUserId() {
-        return userId;
-    }
 }

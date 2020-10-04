@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("posts")
@@ -25,22 +24,22 @@ public class PostController {
     }
 
     @PostMapping("create")
-    public void createNewPost(@RequestBody Post newPost) {
+    public void createNewPost(@RequestBody Post newPost) throws Exception {
         postService.createPost(newPost);
     }
 
     @GetMapping("{id}")
-    public Post getAllPostById(@PathVariable("id") UUID id) {
+    public Post getAllPostById(@PathVariable("id") long id) {
         return postService.getPostById(id).orElse(null);
     }
 
     @DeleteMapping("delete/{id}")
-    public void deletePostById(@PathVariable("id") UUID id) {
+    public void deletePostById(@PathVariable("id") long id) throws Exception {
         postService.deletePost(id);
     }
 
     @PutMapping("update/{id}")
-    public void updatePostById(@PathVariable("id") UUID id, @RequestBody Post post) {
+    public void updatePostById(@PathVariable("id") long id, @RequestBody Post post) throws Exception {
         post.setId(id);
         postService.updatePost(id, post);
     }

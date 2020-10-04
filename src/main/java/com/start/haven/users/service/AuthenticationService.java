@@ -43,9 +43,9 @@ public class AuthenticationService {
     }
 
 
-    public AuthenticationResponse registerNewUser(User newUser) throws Exception {
+    public void registerNewUser(User newUser) throws Exception {
         havenUserRepository.save(newUser);
-        return createAuthenticationToken(new AuthenticationRequest(
+        createAuthenticationToken(new AuthenticationRequest(
                 newUser.getUsername(), newUser.getPassword()));
     }
 }
