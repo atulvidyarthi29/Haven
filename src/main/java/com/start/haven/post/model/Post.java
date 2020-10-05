@@ -17,14 +17,14 @@ public class Post {
     long downVotes;
 
     @ManyToOne
-    User userId;
+    User user;
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User userId) {
+        this.user = userId;
     }
 
     public long getId() {

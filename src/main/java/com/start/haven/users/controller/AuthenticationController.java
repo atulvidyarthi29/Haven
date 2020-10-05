@@ -22,7 +22,6 @@ public class AuthenticationController {
         this.authenticationService = authenticationService;
     }
 
-
     @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest request) throws Exception {
         return ResponseEntity.ok(authenticationService.createAuthenticationToken(request));

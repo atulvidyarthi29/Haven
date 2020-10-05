@@ -2,11 +2,9 @@ package com.start.haven.post.service;
 
 import com.start.haven.post.dao.PostRepository;
 import com.start.haven.post.model.Post;
-import com.start.haven.users.dao.HavenUserRepository;
+import com.start.haven.security.UserUtil;
 import com.start.haven.users.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,12 +14,12 @@ import java.util.Optional;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final HavenUserRepository havenUserRepository;
+    private final UserUtil userUtil;
 
     @Autowired
-    public PostService(PostRepository postRepository, HavenUserRepository havenUserRepository) {
+    public PostService(PostRepository postRepository, UserUtil userUtil) {
         this.postRepository = postRepository;
-        this.havenUserRepository = havenUserRepository;
+        this.userUtil = userUtil;
     }
 
     public List<Post> getAllPosts() {
@@ -33,22 +31,26 @@ public class PostService {
     }
 
     public void createPost(Post newPost) throws Exception {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((UserDetails) principal).getUsername();
-        Optional<User> loggedInUser = havenUserRepository.findUserByUsername(username);
+        Optional<User> loggedInUser = userUtil.loggedInUser();
         loggedInUser.orElseThrow(() -> new Exception("User can't be authenticated"));
-        newPost.setUserId(loggedInUser.get());
+        newPost.setUser(loggedInUser.get());
         postRepository.save(newPost);
     }
 
     public void deletePost(long id) throws Exception {
         Optional<Post> postToDelete = postRepository.findById(id);
         postToDelete.orElseThrow(() -> new Exception("Post not found"));
+        if (postToDelete.get().getUser().getId() != userUtil.loggedInUser().get().getId())
+            throw new Exception("Authentication Failed");
         postRepository.delete(postToDelete.get());
     }
 
     public void updatePost(long id, Post post) throws Exception {
-        Post postToUpdate = postRepository.findById(id).get();
+        Optional<Post> optionalPost = postRepository.findById(id);
+        optionalPost.orElseThrow(() -> new Exception("Cannot retrieve the post."));
+        Post postToUpdate = optionalPost.get();
+        if (postToUpdate.getUser().getId() != userUtil.loggedInUser().get().getId())
+            throw new Exception("Authentication Failed");
         postToUpdate.setTitle(post.getTitle());
         postToUpdate.setDescription(post.getDescription());
         postRepository.save(postToUpdate);

@@ -40,7 +40,6 @@ public class PostController {
 
     @PutMapping("update/{id}")
     public void updatePostById(@PathVariable("id") long id, @RequestBody Post post) throws Exception {
-        post.setId(id);
         postService.updatePost(id, post);
     }
 
